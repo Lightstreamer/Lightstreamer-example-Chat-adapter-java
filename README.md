@@ -74,11 +74,11 @@ After you have Downloaded and installed Lightstreamer, please go to the "adapter
 ```sh
  >javac -source 1.7 -target 1.7 -nowarn -g -classpath compile_libs/log4j-1.2.15.jar;compile_libs/ls-adapter-interface/ls-adapter-interface.jar;compile_libs/ls-generic-adapters/ls-generic-adapters.jar -sourcepath src/src_chat -d tmp_classes src/src_chat/chat_demo/adapters/ChatDataAdapter.java
  
- >jar cvf LS_chat_data_adapter.jar -C tmp_classes src_chat
+ >jar cvf LS_chat_data_adapter.jar -C tmp_classes chat_demo
  
  >javac -source 1.7 -target 1.7 -nowarn -g -classpath compile_libs/log4j-1.2.15.jar;compile_libs/ls-adapter-interface/ls-adapter-interface.jar;compile_libs/ls-generic-adapters/ls-generic-adapters.jar;LS_chat_data_adapter.jar -sourcepath src/src_metadata -d tmp_classes src/src_metadata/chat_demo/adapters/ChatMetadataAdapter.java
  
- >jar cvf LS_chat_metadata_adapter.jar -C tmp_classes src_metadata
+ >jar cvf LS_chat_metadata_adapter.jar -C tmp_classes chat_demo
 ```
 
 See Also
