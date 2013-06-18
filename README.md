@@ -9,7 +9,7 @@ Java Data Adapter and Metadata Adapter
 
 The Data Adapter accepts message submission for the unique chat room. The sender is identified by an IP address and a nickname.<br>
 
-The Metadata Adapter Adapter inherits from the reusable LiteralBasedProvider and just adds a simple support for message submission. It should not be used as a reference for a real case of client-originated message handling, as no guaranteed delivery and no clustering support is shown.
+The Metadata Adapter Adapter inherits from the reusable [LiteralBasedProvider](https://github.com/Weswit/Lightstreamer-example-ReusableMetadata-adapter-java) and just adds a simple support for message submission. It should not be used as a reference for a real case of client-originated message handling, as no guaranteed delivery and no clustering support is shown.
 
 Configure Lightstreamer
 -----------------------
