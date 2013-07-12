@@ -18,7 +18,7 @@ If you want to skip the build process of this Adapter please note that the "Depl
 Otherwise follow these steps:
 
 *  Get the ls-adapter-interface.jar, ls-generic-adapters.jar, and log4j-1.2.15.jar files from the [latest Lightstreamer distribution](http://www.lightstreamer.com/download).
-*  Create the jars  LS_chat_metadata_adapter.jar and LS_chat_data_adapter.jar created for something like these commands:
+*  Create the jars LS_chat_metadata_adapter.jar and LS_chat_data_adapter.jar created for something like these commands:
 ```sh
  >javac -source 1.7 -target 1.7 -nowarn -g -classpath compile_libs/log4j-1.2.15.jar;compile_libs/ls-adapter-interface/ls-adapter-interface.jar;compile_libs/ls-generic-adapters/ls-generic-adapters.jar -sourcepath src/src_chat -d tmp_classes src/src_chat/chat_demo/adapters/ChatDataAdapter.java
  
@@ -36,7 +36,7 @@ After you have Downloaded and installed Lightstreamer, please go to the "adapter
 
 1. Go to the "adapters" folder of your Lightstreamer Server installation. You have to create a new folder to deploy the chat adapters, let's call it "chat", and a "lib" folder inside it.
 2. Create an "adapters.xml" file inside the "chat" folder and use a content similar to that of the file in the directory /Deplolyment_LS/chat (this is an example configuration, you can modify it to your liking).
-
+3. Copy into /chat/lib the jars (LS_chat_metadata_adapter.jar and LS_chat_data_adapter.jar) created in the previous section.
 
 # See Also #
 
