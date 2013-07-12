@@ -1,0 +1,1 @@
+This folder contains the binaries and the configuration resources needed to plug the Chat Demo Data Adapter into Lightstreamer Server.
