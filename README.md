@@ -34,9 +34,19 @@ Otherwise follow these steps:
 Now you are ready to deploy the Chat Demo Adapter into Lighstreamer server.<br>
 After you have Downloaded and installed Lightstreamer, please go to the "adapters" folder of your Lightstreamer Server installation. You should find a "Demo" folder containing some adapter ready-made for several demo including the Chat ones, please note that the MetaData Adapter jar installed is a mixed one that combines the functionality of several demos. If this is not your case because you have removed the "Demo" folder or you want to install the Chat Adapter Set alone, please follow these steps to configure the Chat Adapter Set properly:
 
-1. Go to the "adapters" folder of your Lightstreamer Server installation. You have to create a new folder to deploy the chat adapters, let's call it "chat", and a "lib" folder inside it.
+1. You have to create a new folder to deploy the chat adapters, let's call it "chat", and a "lib" folder inside it.
 2. Create an "adapters.xml" file inside the "chat" folder and use a content similar to that of the file in the directory /Deplolyment_LS/chat (this is an example configuration, you can modify it to your liking).
 3. Copy into /chat/lib the jars (LS_chat_metadata_adapter.jar and LS_chat_data_adapter.jar) created in the previous section.
+
+Now with the "chat" folder obtained on your behalf or with the one in the "Deployment_LS" folder of this project, you must follow these steps:
+
+1. Make sure you have installed Lightstreamer Server, as explained in the GETTING_STARTED.TXT file in the installation home directory.
+2. Make sure that Lightstreamer Server is not running.
+3. Copy the "chat" directory and all of its files from this directory to the "adapters" subdirectory in your Lightstreamer Server installation home directory.
+4. Copy the "ls-generic-adapters.jar" file from the "lib" directory of the sibling "Reusable_MetadataAdapters" SDK example to the "shared/lib" subdirectory in your Lightstreamer Server installation home directory.
+5. Lightstreamer Server is now ready to be launched.
+
+Please test your Adapter with one of the clients in the [list](https://github.com/Weswit/Lightstreamer-example-Chat-adapter-java#clients-using-this-adapter) below.
 
 # See Also #
 
@@ -47,6 +57,8 @@ After you have Downloaded and installed Lightstreamer, please go to the "adapter
 ## Related projects ##
 
 * [Lightstreamer Reusable Metadata Adapter in Java](https://github.com/Weswit/Lightstreamer-example-ReusableMetadata-adapter-java)
+* [Lightstreamer Instant Messenger Demo Adapter](https://github.com/Weswit/Lightstreamer-example-Messenger-adapter-java)
+* [Lightstreamer Messenger Demo Client for JavaScript](https://github.com/Weswit/Lightstreamer-example-Messenger-client-javascript)
 
 # Lightstreamer Compatibility Notes #
 
