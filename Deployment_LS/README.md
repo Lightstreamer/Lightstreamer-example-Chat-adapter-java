@@ -1,2 +1,0 @@
-This folder contains the binaries and the configuration resources needed to plug the Chat Demo Data Adapter into Lightstreamer Server.
-Just copy the "chat" folder into "adapters" folder of your Lightstreamer installation and launch the server.
