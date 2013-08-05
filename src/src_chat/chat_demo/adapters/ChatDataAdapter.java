@@ -37,6 +37,8 @@ import com.lightstreamer.interfaces.data.SubscriptionException;
 
 public class ChatDataAdapter implements SmartDataProvider {
 
+    private static final String ITEM_NAME = "chat_room";
+    
     /**
      * A static map, to be used by the Metadata Adapter to find the data
      * adapter instance; this allows the Metadata Adapter to forward client
@@ -107,7 +109,7 @@ public class ChatDataAdapter implements SmartDataProvider {
     public void subscribe(String item, Object handle, boolean arg2)
             throws SubscriptionException, FailureException {
 
-        if (!item.equals("chat_room")) {
+        if (!item.equals(ITEM_NAME)) {
             // only one item for a unique chat room is managed
             throw new SubscriptionException("No such item");
         }
@@ -191,6 +193,26 @@ public class ChatDataAdapter implements SmartDataProvider {
         executor.execute(updateTask);
 
         return true;
+    }
+    
+    //not used
+    public void clearHistory() {
+        final Object currSubscribed = subscribed;
+        if (currSubscribed == null) {
+            return;
+        }
+        //If we have a listener create a new Runnable to be used as a task to pass the
+        //event to the listener
+        Runnable updateTask = new Runnable() {
+            public void run() {
+                // call the update on the listener;
+                // in case the listener has just been detached,
+                // the listener should detect the case
+                listener.smartClearSnapshot(currSubscribed);
+            }
+        };
+
+        executor.execute(updateTask);
     }
 
     public void subscribe(String arg0, boolean arg1)
