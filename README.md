@@ -118,6 +118,9 @@ Please test your Adapter with one of the clients in the [list](https://github.co
 * [Lightstreamer Instant Messenger Demo Adapter](https://github.com/Weswit/Lightstreamer-example-Messenger-adapter-java)
 * [Lightstreamer Messenger Demo Client for JavaScript](https://github.com/Weswit/Lightstreamer-example-Messenger-client-javascript)
 
+## The same Demo Adapter with other technologies ##
+* [Lightstreamer Chat Demo Adapter for Node](https://github.com/Weswit/Lightstreamer-example-Chat-adapter-node)
+
 # Lightstreamer Compatibility Notes #
 
 - Compatible with Lightstreamer SDK for Java Adapters since 5.1
