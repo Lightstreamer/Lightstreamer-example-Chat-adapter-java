@@ -1,4 +1,4 @@
-# Lightstreamer Chat Demo Adapter #
+# Lightstreamer - Basic Chat Demo - Java SE Adapter #
 
 This project includes the resources needed to develop the Metadata and Data Adapters for the Lightstreamer Chat Demos that are pluggable into Lightstreamer Server. Please refer [here](http://www.lightstreamer.com/latest/Lightstreamer_Allegro-Presto-Vivace_5_1_Colosseo/Lightstreamer/DOCS-SDKs/General%20Concepts.pdf) for more details about Lightstreamer Adapters.
 The Lightstreamer Chat Demos are very simple chat applications based on Lightstreamer.<br>
@@ -110,16 +110,16 @@ Please test your Adapter with one of the clients in the [list](https://github.co
 
 ## Clients using this Adapter ##
 
-* [Lightstreamer Chat Demo Client for JavaScript](https://github.com/Weswit/Lightstreamer-example-chat-client-javascript)
+* [Lightstreamer - Basic Chat Demo - HTML Client](https://github.com/Weswit/Lightstreamer-example-chat-client-javascript)
 
 ## Related projects ##
 
-* [Lightstreamer Reusable Metadata Adapter in Java](https://github.com/Weswit/Lightstreamer-example-ReusableMetadata-adapter-java)
-* [Lightstreamer Instant Messenger Demo Adapter](https://github.com/Weswit/Lightstreamer-example-Messenger-adapter-java)
-* [Lightstreamer Messenger Demo Client for JavaScript](https://github.com/Weswit/Lightstreamer-example-Messenger-client-javascript)
+* [Lightstreamer - Reusable Metadata Adapters - Java SE Adapter](https://github.com/Weswit/Lightstreamer-example-ReusableMetadata-adapter-java)
+* [Lightstreamer - Basic Messenger Demo - Java SE Adapter](https://github.com/Weswit/Lightstreamer-example-Messenger-adapter-java)
+* [Lightstreamer - Basic Messenger Demo - HTML Client](https://github.com/Weswit/Lightstreamer-example-Messenger-client-javascript)
 
 ## The same Demo Adapter with other technologies ##
-* [Lightstreamer Chat Demo Adapter for Node](https://github.com/Weswit/Lightstreamer-example-Chat-adapter-node)
+* [Lightstreamer - Basic Chat Demo - Node.js Adapter](https://github.com/Weswit/Lightstreamer-example-Chat-adapter-node)
 
 # Lightstreamer Compatibility Notes #
 
