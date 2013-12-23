@@ -1,4 +1,5 @@
 # Lightstreamer - Basic Chat Demo - Java Adapter #
+<!-- START DESCRIPTION Basic Chat Demo -->
 
 This project includes the resources needed to develop the Metadata and Data Adapters for the Lightstreamer Chat Demos that are pluggable into Lightstreamer Server. Please refer [here](http://www.lightstreamer.com/latest/Lightstreamer_Allegro-Presto-Vivace_5_1_Colosseo/Lightstreamer/DOCS-SDKs/General%20Concepts.pdf) for more details about Lightstreamer Adapters.
 The Lightstreamer Chat Demos are very simple chat applications based on Lightstreamer.<br>
@@ -11,6 +12,8 @@ Contains the source code for the Chat Data Adapter. The Data Adapter accepts mes
 ## Metadata Adapter - src_metadata ##
 Contains the source code for a Metadata Adapter to be associated with the Chat Demo Data Adapter.<br>
 The Metadata Adapter inherits from the reusable [LiteralBasedProvider](https://github.com/Weswit/Lightstreamer-example-ReusableMetadata-adapter-java) and just adds a simple support for message submission. It should not be used as a reference for a real case of client-originated message handling, as no guaranteed delivery and no clustering support is shown.
+
+<!-- END DESCRIPTION Basic Chat Demo -->
 
 # Build #
 
@@ -108,8 +111,11 @@ Please test your Adapter with one of the clients in the [list](https://github.co
 # See Also #
 
 ## Clients using this Adapter ##
+<!-- START RELATED_ENTRIES -->
 
 * [Lightstreamer - Basic Chat Demo - HTML Client](https://github.com/Weswit/Lightstreamer-example-chat-client-javascript)
+
+<!-- END RELATED_ENTRIES -->
 
 ## Related projects ##
 
