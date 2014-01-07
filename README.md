@@ -1,4 +1,5 @@
-# Lightstreamer Chat Demo Adapter #
+# Lightstreamer - Basic Chat Demo - Java Adapter #
+<!-- START DESCRIPTION lightstreamer-example-chat-adapter-java -->
 
 This project includes the resources needed to develop the Metadata and Data Adapters for the Lightstreamer Chat Demos that are pluggable into Lightstreamer Server. Please refer [here](http://www.lightstreamer.com/latest/Lightstreamer_Allegro-Presto-Vivace_5_1_Colosseo/Lightstreamer/DOCS-SDKs/General%20Concepts.pdf) for more details about Lightstreamer Adapters.
 The Lightstreamer Chat Demos are very simple chat applications based on Lightstreamer.<br>
@@ -11,6 +12,8 @@ Contains the source code for the Chat Data Adapter. The Data Adapter accepts mes
 ## Metadata Adapter - src_metadata ##
 Contains the source code for a Metadata Adapter to be associated with the Chat Demo Data Adapter.<br>
 The Metadata Adapter inherits from the reusable [LiteralBasedProvider](https://github.com/Weswit/Lightstreamer-example-ReusableMetadata-adapter-java) and just adds a simple support for message submission. It should not be used as a reference for a real case of client-originated message handling, as no guaranteed delivery and no clustering support is shown.
+
+<!-- END DESCRIPTION lightstreamer-example-chat-adapter-java -->
 
 # Build #
 
@@ -43,8 +46,7 @@ You have to create a specific folder to deploy the Chat Demo Adapter otherwise g
 <?xml version="1.0"?>
 
 <!-- Mandatory. Define an Adapter Set and sets its unique ID. -->
-<adapters_conf id="DEMO">
-
+<adapters_conf id="CHAT">
 
     <!-- Mandatory. Define the Metadata Adapter. -->
     <metadata_provider>
@@ -109,14 +111,20 @@ Please test your Adapter with one of the clients in the [list](https://github.co
 # See Also #
 
 ## Clients using this Adapter ##
+<!-- START RELATED_ENTRIES -->
 
-* [Lightstreamer Chat Demo Client for JavaScript](https://github.com/Weswit/Lightstreamer-example-chat-client-javascript)
+* [Lightstreamer - Basic Chat Demo - HTML Client](https://github.com/Weswit/Lightstreamer-example-chat-client-javascript)
+
+<!-- END RELATED_ENTRIES -->
 
 ## Related projects ##
 
-* [Lightstreamer Reusable Metadata Adapter in Java](https://github.com/Weswit/Lightstreamer-example-ReusableMetadata-adapter-java)
-* [Lightstreamer Instant Messenger Demo Adapter](https://github.com/Weswit/Lightstreamer-example-Messenger-adapter-java)
-* [Lightstreamer Messenger Demo Client for JavaScript](https://github.com/Weswit/Lightstreamer-example-Messenger-client-javascript)
+* [Lightstreamer - Reusable Metadata Adapters - Java Adapter](https://github.com/Weswit/Lightstreamer-example-ReusableMetadata-adapter-java)
+* [Lightstreamer - Basic Messenger Demo - Java Adapter](https://github.com/Weswit/Lightstreamer-example-Messenger-adapter-java)
+* [Lightstreamer - Basic Messenger Demo - HTML Client](https://github.com/Weswit/Lightstreamer-example-Messenger-client-javascript)
+
+## The same Demo Adapter with other technologies ##
+* [Lightstreamer - Basic Chat Demo - Node.js Adapter](https://github.com/Weswit/Lightstreamer-example-Chat-adapter-node)
 
 # Lightstreamer Compatibility Notes #
 

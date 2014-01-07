@@ -52,11 +52,6 @@ public class ChatDataAdapter implements SmartDataProvider {
         new ConcurrentHashMap<String, ChatDataAdapter>();
 
     /**
-     * A date formatter used to format timestamps.
-     */
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-
-    /**
      * Private logger; a specific "LS_demos_Logger.Chat" category
      * should be supplied by log4j configuration.
      */
@@ -168,7 +163,7 @@ public class ChatDataAdapter implements SmartDataProvider {
             return false;
         }
 
-        String timestamp = sdf.format(new Date());
+        String timestamp = new SimpleDateFormat("HH:mm:ss").format(new Date());
 
         logger.debug(timestamp + "|New message: " + IP + "->" + nick + "->" + message);
 
