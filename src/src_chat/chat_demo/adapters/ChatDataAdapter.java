@@ -37,6 +37,8 @@ import com.lightstreamer.interfaces.data.SubscriptionException;
 
 public class ChatDataAdapter implements SmartDataProvider {
 
+    private static final String ITEM_NAME = "chat_room";
+    
     /**
      * A static map, to be used by the Metadata Adapter to find the data
      * adapter instance; this allows the Metadata Adapter to forward client
@@ -48,11 +50,6 @@ public class ChatDataAdapter implements SmartDataProvider {
      */
     public static final ConcurrentHashMap<String, ChatDataAdapter> feedMap =
         new ConcurrentHashMap<String, ChatDataAdapter>();
-
-    /**
-     * A date formatter used to format timestamps.
-     */
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 
     /**
      * Private logger; a specific "LS_demos_Logger.Chat" category
@@ -107,7 +104,7 @@ public class ChatDataAdapter implements SmartDataProvider {
     public void subscribe(String item, Object handle, boolean arg2)
             throws SubscriptionException, FailureException {
 
-        if (!item.equals("chat_room")) {
+        if (!item.equals(ITEM_NAME)) {
             // only one item for a unique chat room is managed
             throw new SubscriptionException("No such item");
         }
@@ -166,7 +163,7 @@ public class ChatDataAdapter implements SmartDataProvider {
             return false;
         }
 
-        String timestamp = sdf.format(new Date());
+        String timestamp = new SimpleDateFormat("HH:mm:ss").format(new Date());
 
         logger.debug(timestamp + "|New message: " + IP + "->" + nick + "->" + message);
 
