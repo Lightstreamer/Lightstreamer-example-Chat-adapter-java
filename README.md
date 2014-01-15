@@ -6,10 +6,10 @@ The Lightstreamer Chat Demos are very simple chat applications based on Lightstr
 <br>
 The project is comprised of source code and a deployment example. The source code is divided into two folders.
 
-## Chat Adapter - src_chat ##
+## Chat Adapter ##
 Contains the source code for the Chat Data Adapter. The Data Adapter accepts message submission for the unique chat room. The sender is identified by an IP address and a nickname.<br>
 
-## Metadata Adapter - src_metadata ##
+## Metadata Adapter ##
 Contains the source code for a Metadata Adapter to be associated with the Chat Demo Data Adapter.<br>
 The Metadata Adapter inherits from the reusable [LiteralBasedProvider](https://github.com/Weswit/Lightstreamer-example-ReusableMetadata-adapter-java) and just adds a simple support for message submission. It should not be used as a reference for a real case of client-originated message handling, as no guaranteed delivery and no clustering support is shown.
 
@@ -110,20 +110,20 @@ Please test your Adapter with one of the clients in the [list](https://github.co
 
 # See Also #
 
-## Clients using this Adapter ##
+## Clients Using This Adapter ##
 <!-- START RELATED_ENTRIES -->
 
 * [Lightstreamer - Basic Chat Demo - HTML Client](https://github.com/Weswit/Lightstreamer-example-chat-client-javascript)
 
 <!-- END RELATED_ENTRIES -->
 
-## Related projects ##
+## Related Projects ##
 
 * [Lightstreamer - Reusable Metadata Adapters - Java Adapter](https://github.com/Weswit/Lightstreamer-example-ReusableMetadata-adapter-java)
 * [Lightstreamer - Basic Messenger Demo - Java Adapter](https://github.com/Weswit/Lightstreamer-example-Messenger-adapter-java)
 * [Lightstreamer - Basic Messenger Demo - HTML Client](https://github.com/Weswit/Lightstreamer-example-Messenger-client-javascript)
 
-## The same Demo Adapter with other technologies ##
+## The Same Demo Adapter With Other Technologies ##
 * [Lightstreamer - Basic Chat Demo - Node.js Adapter](https://github.com/Weswit/Lightstreamer-example-Chat-adapter-node)
 
 # Lightstreamer Compatibility Notes #
