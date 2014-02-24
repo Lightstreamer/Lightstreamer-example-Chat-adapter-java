@@ -128,5 +128,5 @@ Please test your Adapter with one of the clients in the [list](https://github.co
 
 # Lightstreamer Compatibility Notes #
 
-- Compatible with Lightstreamer SDK for Java Adapters since 5.1
+- Compatible with Lightstreamer SDK for Java Adapters since 6.0
 
