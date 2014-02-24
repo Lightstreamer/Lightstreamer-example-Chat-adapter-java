@@ -190,7 +190,7 @@ public class ChatDataAdapter implements SmartDataProvider {
         return true;
     }
     
-    //not used
+    // never used in the demo, just showing the feature
     public void clearHistory() {
         final Object currSubscribed = subscribed;
         if (currSubscribed == null) {
