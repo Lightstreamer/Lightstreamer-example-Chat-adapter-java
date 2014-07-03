@@ -6,7 +6,7 @@ The Lightstreamer Basic Chat Demo is a very simple chat application based on Lig
 ## Details
 As example of a client using this adapter, you may refer to the [Basic Chat Demo - HTML Client](https://github.com/Weswit/Lightstreamer-example-chat-client-javascript) and view the corresponding [Live Demo](http://demos.lightstreamer.com/ChatDemo/).
 
-This project includes the implementation of the SmartDataProvider interface and the MetadataProviderAdapter interface for the Lightstreamer Chat Demos. Please refer to [General Concepts](http://www.lightstreamer.com/latest/Lightstreamer_Allegro-Presto-Vivace_5_1_Colosseo/Lightstreamer/DOCS-SDKs/General%20Concepts.pdf) for more details about Lightstreamer Adapters.
+This project includes the implementation of the [SmartDataProvider](http://www.lightstreamer.com/docs/adapter_java_api/com/lightstreamer/interfaces/data/SmartDataProvider.html) interface and the [MetadataProviderAdapter](http://www.lightstreamer.com/docs/adapter_java_api/com/lightstreamer/interfaces/metadata/MetadataProviderAdapter.html) interface for the Lightstreamer Chat Demos. Please refer to [General Concepts](http://www.lightstreamer.com/latest/Lightstreamer_Allegro-Presto-Vivace_5_1_Colosseo/Lightstreamer/DOCS-SDKs/General%20Concepts.pdf) for more details about Lightstreamer Adapters.
 
 ### Data Adapter ##
 The `src_chat` folder contains the source code for the Chat Data Adapter. The Data Adapter accepts message submission for the unique chat room. The sender is identified by an IP address and a nickname.
@@ -32,12 +32,13 @@ To build your own version of `LS_chat_metadata_adapter.jar` and `LS_chat_data_ad
 *  Create the jars `LS_chat_metadata_adapter.jar` and `LS_chat_data_adapter.jar` created for something like these commands:
 ```sh
  >javac -source 1.7 -target 1.7 -nowarn -g -classpath compile_libs/log4j-1.2.15.jar;compile_libs/ls-adapter-interface/ls-adapter-interface.jar;compile_libs/ls-generic-adapters/ls-generic-adapters.jar -sourcepath src/src_chat -d tmp_classes src/src_chat/chat_demo/adapters/ChatDataAdapter.java
-  >jar cvf LS_chat_data_adapter.jar -C tmp_classes chat_demo
+ >jar cvf LS_chat_data_adapter.jar -C tmp_classes chat_demo
  
  >javac -source 1.7 -target 1.7 -nowarn -g -classpath compile_libs/log4j-1.2.15.jar;compile_libs/ls-adapter-interface/ls-adapter-interface.jar;compile_libs/ls-generic-adapters/ls-generic-adapters.jar;LS_chat_data_adapter.jar -sourcepath src/src_metadata -d tmp_classes src/src_metadata/chat_demo/adapters/ChatMetadataAdapter.java
-  >jar cvf LS_chat_metadata_adapter.jar -C tmp_classes chat_demo
+ >jar cvf LS_chat_metadata_adapter.jar -C tmp_classes chat_demo
 ```
-
+* Stop Lightstreamer Server; copy the just compiled LS_chat_metadata_adapter.jar in the adapters/Chat/lib folder of your Lightstreamer Server installation; restart Lightstreamer Server.
+ 
 ## See Also
 
 ### Clients Using This Adapter
