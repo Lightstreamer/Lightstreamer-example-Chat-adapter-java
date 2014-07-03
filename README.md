@@ -6,15 +6,14 @@ The Lightstreamer Basic Chat Demo is a very simple chat application based on Lig
 ## Details
 As example of a client using this adapter, you may refer to the [Basic Chat Demo - HTML Client](https://github.com/Weswit/Lightstreamer-example-chat-client-javascript) and view the corresponding [Live Demo](http://demos.lightstreamer.com/ChatDemo/).
 
-This project includes the resources needed to develop the Metadata and Data Adapters for the Lightstreamer Chat Demos that are pluggable into Lightstreamer Server. Please refer to [General Concepts](http://www.lightstreamer.com/latest/Lightstreamer_Allegro-Presto-Vivace_5_1_Colosseo/Lightstreamer/DOCS-SDKs/General%20Concepts.pdf) for more details about Lightstreamer Adapters.
-<br>
-The project is comprised of source code and a deployment example. The source code is divided into two folders.
+This project includes the implementation of the SmartDataProvider interface and the MetadataProviderAdapter interface for the Lightstreamer Chat Demos. Please refer to [General Concepts](http://www.lightstreamer.com/latest/Lightstreamer_Allegro-Presto-Vivace_5_1_Colosseo/Lightstreamer/DOCS-SDKs/General%20Concepts.pdf) for more details about Lightstreamer Adapters.
 
 ### Data Adapter ##
-The `src_chat` folder contains the source code for the Chat Data Adapter. The Data Adapter accepts message submission for the unique chat room. The sender is identified by an IP address and a nickname.<br>
+The `src_chat` folder contains the source code for the Chat Data Adapter. The Data Adapter accepts message submission for the unique chat room. The sender is identified by an IP address and a nickname.
 
 ### Metadata Adapter ##
-The `src_metadata` folder contains the source code for a Metadata Adapter to be associated with the Chat Demo Data Adapter.<br>
+The `src_metadata` folder contains the source code for a Metadata Adapter to be associated with the Chat Demo Data Adapter.
+
 The Metadata Adapter inherits from the reusable [LiteralBasedProvider](https://github.com/Weswit/Lightstreamer-example-ReusableMetadata-adapter-java) and just adds a simple support for message submission. It should not be used as a reference for a real case of client-originated message handling, as no guaranteed delivery and no clustering support is shown.
 
 <!-- END DESCRIPTION lightstreamer-example-chat-adapter-java -->
