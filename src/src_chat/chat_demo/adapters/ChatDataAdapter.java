@@ -163,7 +163,10 @@ public class ChatDataAdapter implements SmartDataProvider {
             return false;
         }
 
-        String timestamp = new SimpleDateFormat("HH:mm:ss").format(new Date());
+        Date now = new Date();
+        String timestamp = new SimpleDateFormat("HH:mm:ss").format(now);
+        long raw_timestamp = now.getTime();
+        
 
         logger.debug(timestamp + "|New message: " + IP + "->" + nick + "->" + message);
 
@@ -171,6 +174,7 @@ public class ChatDataAdapter implements SmartDataProvider {
         update.put("nick", nick);
         update.put("message", message);
         update.put("timestamp", timestamp);
+        update.put("raw_timestamp", String.valueOf(raw_timestamp));
         update.put("IP", IP);
 
         //If we have a listener create a new Runnable to be used as a task to pass the
