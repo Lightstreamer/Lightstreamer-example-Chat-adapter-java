@@ -19,7 +19,7 @@ The `src_metadata` folder contains the source code for a Metadata Adapter to be 
 
 The Metadata Adapter inherits from the reusable [LiteralBasedProvider](https://github.com/Weswit/Lightstreamer-example-ReusableMetadata-adapter-java) and just adds a simple support for message submission. It should not be used as a reference for a real case of client-originated message handling, as no guaranteed delivery and no clustering support is shown.
 
-**NOTE: At this stage, the demo is based on a version of LS Java Adapter SDK that is currently available only as a pre-release. Skip the notes below and refer to the "for_Lightstreamer_5.1.2" tag for a demo version suitable for building and deploying.**
+**NOTE: At this stage, the demo is based on a version of LS Java Adapter SDK that is currently available only as a pre-release. Skip the notes below and refer to the [for_Lightstreamer_5.x](https://github.com/Weswit/Lightstreamer-example-Chat-adapter-java/tree/for_Lightstreamer_5.1.2) tag for a demo version suitable for building and deploying.**
 <!-- END DESCRIPTION lightstreamer-example-chat-adapter-java -->
 
 ## Install
