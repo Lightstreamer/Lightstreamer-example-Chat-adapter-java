@@ -31,13 +31,14 @@ If you want to install a version of this demo in your local Lightstreamer Server
 ## Build
 To build your own version of `LS_chat_metadata_adapter.jar` and `LS_chat_data_adapter.jar`, instead of using the one provided in the `deploy.zip` file from the [Install](https://github.com/Weswit/Lightstreamer-example-Chat-adapter-java#install) section above, follow these steps:
 * Clone this project.
-* Get the `ls-adapter-interface.jar` and `log4j-1.2.15.jar` files from the [latest Lightstreamer distribution](http://www.lightstreamer.com/download), and copy them into the `lib` directory.
+* Get the `ls-adapter-interface.jar` file from the [latest Lightstreamer distribution](http://www.lightstreamer.com/download), and copy it into the `lib` folder.
+* Get the `log4j-1.2.17.jar` file from [Apache log4j](https://logging.apache.org/log4j/1.2/) and copy it into the `lib` folder.
 * Create the jars `LS_chat_metadata_adapter.jar` and `LS_chat_data_adapter.jar` created for something like these commands:
 ```sh
- >javac -source 1.7 -target 1.7 -nowarn -g -classpath compile_libs/log4j-1.2.15.jar;compile_libs/ls-adapter-interface/ls-adapter-interface.jar -sourcepath src/src_chat -d tmp_classes src/src_chat/chat_demo/adapters/ChatDataAdapter.java
+ >javac -source 1.7 -target 1.7 -nowarn -g -classpath compile_libs/log4j-1.2.17.jar;compile_libs/ls-adapter-interface/ls-adapter-interface.jar -sourcepath src/src_chat -d tmp_classes src/src_chat/chat_demo/adapters/ChatDataAdapter.java
  >jar cvf LS_chat_data_adapter.jar -C tmp_classes chat_demo
  
- >javac -source 1.7 -target 1.7 -nowarn -g -classpath compile_libs/log4j-1.2.15.jar;compile_libs/ls-adapter-interface/ls-adapter-interface.jar;LS_chat_data_adapter.jar -sourcepath src/src_metadata -d tmp_classes src/src_metadata/chat_demo/adapters/ChatMetadataAdapter.java
+ >javac -source 1.7 -target 1.7 -nowarn -g -classpath compile_libs/log4j-1.2.17.jar;compile_libs/ls-adapter-interface/ls-adapter-interface.jar;LS_chat_data_adapter.jar -sourcepath src/src_metadata -d tmp_classes src/src_metadata/chat_demo/adapters/ChatMetadataAdapter.java
  >jar cvf LS_chat_metadata_adapter.jar -C tmp_classes chat_demo
 ```
 * Stop Lightstreamer Server; copy the just compiled LS_chat_metadata_adapter.jar in the adapters/Chat/lib folder of your Lightstreamer Server installation; restart Lightstreamer Server.
