@@ -9,16 +9,76 @@ As an example of a client using this adapter, you may refer to the [Basic Chat D
  
 ## Details
 
-This project includes the implementation of the [SmartDataProvider](http://www.lightstreamer.com/docs/adapter_java_inprocess_api/com/lightstreamer/interfaces/data/SmartDataProvider.html) interface and the [MetadataProviderAdapter](http://www.lightstreamer.com/docs/adapter_java_inprocess_api/com/lightstreamer/interfaces/metadata/MetadataProviderAdapter.html) interface for the *Lightstreamer Basic Chat Demos*. Please refer to [General Concepts](http://www.lightstreamer.com/docs/base/General%20Concepts.pdf) for more details about Lightstreamer Adapters.
+This project includes the implementation of the [SmartDataProvider](http://www.lightstreamer.com/docs/adapter_java_inprocess_api/com/lightstreamer/interfaces/data/SmartDataProvider.html) interface and the [MetadataProviderAdapter](http://www.lightstreamer.com/docs/adapter_java_inprocess_api/com/lightstreamer/interfaces/metadata/MetadataProviderAdapter.html) interface for the *Lightstreamer Basic Chat Demos*.
 
-### Data Adapter ##
+### Data Adapter
 The `src_chat` folder contains the source code for the Chat Data Adapter. The Data Adapter accepts message submission for the unique chat room. The sender is identified by an IP address and a nickname.
 
-### Metadata Adapter ##
+### Metadata Adapter
 The `src_metadata` folder contains the source code for a Metadata Adapter to be associated with the Chat Demo Data Adapter.
 
 The Metadata Adapter inherits from the reusable [LiteralBasedProvider](https://github.com/Weswit/Lightstreamer-example-ReusableMetadata-adapter-java) and just adds a simple support for message submission. It should not be used as a reference for a real case of client-originated message handling, as no guaranteed delivery and no clustering support is shown.
 <!-- END DESCRIPTION lightstreamer-example-chat-adapter-java -->
+
+### The Adapter Set Configuration
+
+This Adapter Set is configured and will be referenced by the clients as `CHAT`. 
+
+The `adapters.xml` file for the Basic Chat Demo, should look like:
+```<?xml version="1.0"?>
+
+<adapters_conf id="CHAT">
+
+
+    <metadata_provider>
+
+        <adapter_class>chat_demo.adapters.ChatMetadataAdapter</adapter_class>
+
+        <!-- Optional for ChatMetadataAdapter.
+             Configuration file for the Adapter's own logging.
+             Logging is managed through log4j. -->
+        <param name="log_config">adapters_log_conf.xml</param>
+        <param name="log_config_refresh_seconds">10</param>
+
+        <!-- Optional, managed by the inherited LiteralBasedProvider.
+             See LiteralBasedProvider javadoc. -->
+        <!--
+        <param name="max_bandwidth">40</param>
+        <param name="max_frequency">3</param>
+        <param name="buffer_size">30</param>
+        <param name="prefilter_frequency">5</param>
+        <param name="allowed_users">user123,user456</param>
+        -->
+        <param name="distinct_snapshot_length">30</param>
+
+        <!-- Optional, managed by the inherited LiteralBasedProvider.
+             See LiteralBasedProvider javadoc. -->
+        <param name="item_family_1">chat_room</param>
+        <param name="modes_for_item_family_1">DISTINCT</param>
+
+    </metadata_provider>
+
+
+    <data_provider name="CHAT_ROOM">
+
+        <adapter_class>chat_demo.adapters.ChatDataAdapter</adapter_class>
+
+        <!-- Optional for ChatDataAdapter.
+             Configuration file for the Adapter's own logging.
+             Leans on the Metadata Adapter for the configuration refresh.
+             Logging is managed through log4j. -->
+        <param name="log_config">adapters_log_conf.xml</param>
+
+    </data_provider>
+
+
+</adapters_conf>
+```
+
+<i>NOTE: not all configuration options of an Adapter Set are exposed by the file suggested above. 
+You can easily expand your configurations using the generic template, `DOCS-SDKs/sdk_adapter_java_inprocess/doc/adapter_conf_template/adapters.xml`, as a reference.</i><br>
+<br>
+Please refer [here](http://www.lightstreamer.com/docs/base/General%20Concepts.pdf) for more details about Lightstreamer Adapters.
 
 ## Install
 If you want to install a version of this demo in your local Lightstreamer Server, follow these steps:
