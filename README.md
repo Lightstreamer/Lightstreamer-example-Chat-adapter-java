@@ -25,7 +25,8 @@ The Metadata Adapter inherits from the reusable [LiteralBasedProvider](https://g
 This Adapter Set is configured and will be referenced by the clients as `CHAT`. 
 
 The `adapters.xml` file for the Basic Chat Demo, should look like:
-```<?xml version="1.0"?>
+```xml
+<?xml version="1.0"?>
 
 <adapters_conf id="CHAT">
 
