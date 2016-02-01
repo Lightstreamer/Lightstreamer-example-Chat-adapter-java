@@ -104,11 +104,11 @@ To build your own version of `LS_chat_metadata_adapter.jar` and `LS_chat_data_ad
 * Get the `log4j-1.2.17.jar` file from [Apache log4j](https://logging.apache.org/log4j/1.2/) and copy it into the `lib` folder.
 * Create the jars `LS_chat_metadata_adapter.jar` and `LS_chat_data_adapter.jar` created for something like these commands:
 ```sh
- >javac -source 1.7 -target 1.7 -nowarn -g -classpath lib/log4j-1.2.17.jar;lib/ls-adapter-interface/ls-adapter-interface.jar -sourcepath src/src_chat -d tmp_classes/adapter src/src_chat/chat_demo/adapters/ChatDataAdapter.java
- >jar cvf LS_chat_data_adapter.jar -C tmp_classes/adapter .
- 
- >javac -source 1.7 -target 1.7 -nowarn -g -classpath lib/log4j-1.2.17.jar;lib/ls-adapter-interface/ls-adapter-interface.jar;LS_chat_data_adapter.jar -sourcepath src/src_metadata -d tmp_classes/metadata src/src_metadata/chat_demo/adapters/ChatMetadataAdapter.java
- >jar cvf LS_chat_metadata_adapter.jar -C tmp_classes/metadata .
+ > mkdir tmp_classes/adapter tmp_classes/metadata
+ > javac -source 1.7 -target 1.7 -nowarn -g -classpath lib/log4j-1.2.17.jar;lib/ls-adapter-interface.jar -sourcepath src/src_chat -d tmp_classes/adapter src/src_chat/chat_demo/adapters/ChatDataAdapter.java
+ > jar cvf LS_chat_data_adapter.jar -C tmp_classes/adapter .
+ > javac -source 1.7 -target 1.7 -nowarn -g -classpath lib/log4j-1.2.17.jar;lib/ls-adapter-interface.jar;LS_chat_data_adapter.jar -sourcepath src/src_metadata -d tmp_classes/metadata src/src_metadata/chat_demo/adapters/ChatMetadataAdapter.java
+ > jar cvf LS_chat_metadata_adapter.jar -C tmp_classes/metadata .
 ```
 * Stop Lightstreamer Server; copy the just compiled LS_chat_metadata_adapter.jar in the adapters/Chat/lib folder of your Lightstreamer Server installation; restart Lightstreamer Server.
  
