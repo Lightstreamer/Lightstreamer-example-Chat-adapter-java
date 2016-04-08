@@ -21,6 +21,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -71,7 +73,32 @@ public class ChatDataAdapter implements SmartDataProvider {
      * An object representing the subscription.
      */
     private volatile Object subscribed;
-
+    
+    /**
+     * Boolean flag for periodic flush of snapshot (call clearSnaphot).
+     */
+    private boolean flushSnapshot;
+    
+    /**
+     * Interval period (in millis) for snapshot flush.
+     */
+    private int flushInterval;
+    
+    /**
+     * Timer for snapshot flush.
+     */
+    private Timer myTimer;
+    
+    /**
+     * Default interval period (in millis) for snapshot flush.
+     */
+    private static final int DEFAULT_FLUSH_INTERVAL = 30 * 60 * 1000;
+    
+    /**
+     * Boolean flag that indicate messages presence.
+     */
+    private boolean messagesPresence;
+    
     public ChatDataAdapter() {
         executor = Executors.newSingleThreadExecutor();
     }
@@ -87,6 +114,23 @@ public class ChatDataAdapter implements SmartDataProvider {
 
         // Read the Adapter Set name, which is supplied by the Server as a parameter
         String adapterSetId = (String) params.get("adapters_conf.id");
+        
+        
+        if (params.containsKey("flush_snapshot")) {
+            String tmp = (String) params.get("flush_snapshot");
+            this.flushSnapshot = new Boolean(tmp).booleanValue();
+        } else {
+            this.flushSnapshot = false;
+        }
+        
+        if (params.containsKey("flush_snapshot_interval")) {
+            String tmp = (String) params.get("flush_snapshot_interval");
+            this.flushInterval = new Integer(tmp).intValue();
+        } else {
+            this.flushInterval = DEFAULT_FLUSH_INTERVAL;
+        }
+        
+        this.messagesPresence = false;
 
         // Put a reference to this instance on a static map
         // to be read by the Metadata Adapter
@@ -109,6 +153,17 @@ public class ChatDataAdapter implements SmartDataProvider {
 
         subscribed = handle;
 
+        if(this.flushSnapshot) {
+        	// Start Thread for periodic flush of the snapshot.
+            myTimer = new Timer(true);
+            
+            myTimer.scheduleAtFixedRate(new TimerTask() {
+               @Override
+                public void run() {
+                    clearHistory();
+                }
+            }, new Date(System.currentTimeMillis() + this.flushInterval), this.flushInterval);
+        } 
     }
 
 
@@ -118,6 +173,12 @@ public class ChatDataAdapter implements SmartDataProvider {
         assert(subscribed != null);
 
         subscribed = null;
+        
+        if (myTimer != null) {
+            myTimer.cancel();
+            myTimer.purge();
+            myTimer = null;
+        }
     }
 
     public boolean isSnapshotAvailable(String arg0)
@@ -158,6 +219,8 @@ public class ChatDataAdapter implements SmartDataProvider {
             logger.warn("Received empty or null IP");
             return false;
         }
+        
+        this.messagesPresence = true;
 
         Date now = new Date();
         String timestamp = new SimpleDateFormat("HH:mm:ss").format(now);
@@ -190,10 +253,10 @@ public class ChatDataAdapter implements SmartDataProvider {
         return true;
     }
     
-    // never used in the demo, just showing the feature
+    // used in case of flush_snapshot set to true.
     public void clearHistory() {
         final Object currSubscribed = subscribed;
-        if (currSubscribed == null) {
+        if (currSubscribed == null || this.messagesPresence == false) {
             return;
         }
         //If we have a listener create a new Runnable to be used as a task to pass the
@@ -208,6 +271,8 @@ public class ChatDataAdapter implements SmartDataProvider {
         };
 
         executor.execute(updateTask);
+        
+        this.messagesPresence = false;
     }
 
     public void subscribe(String arg0, boolean arg1)
