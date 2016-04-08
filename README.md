@@ -14,6 +14,8 @@ This project includes the implementation of the [SmartDataProvider](http://www.l
 ### Data Adapter
 The `src_chat` folder contains the source code for the Chat Data Adapter. The Data Adapter accepts message submission for the unique chat room. The sender is identified by an IP address and a nickname.
 
+It's possible to flush chat history based on optional parameters provided in the `adapters.xml` file.
+
 ### Metadata Adapter
 The `src_metadata` folder contains the source code for a Metadata Adapter to be associated with the Chat Demo Data Adapter.
 
@@ -78,6 +80,15 @@ The `adapters.xml` file for the Basic Chat Demo, should look like:
              Logging is managed through log4j. -->
         <param name="log_config">adapters_log_conf.xml</param>
 
+        <!-- Optional for ChatDataAdapter.
+             Configuration flag for periodic flush of the snapshot.
+             Default: false. -->
+        <param name="flush_snapshot">true</param>
+      		
+        <!-- Optional for ChatDataAdapter.
+             Configuration interval in millis for snapshot flush.
+             Default: 30 minutes. -->
+        <!-- <param name="flush_snapshot_interval">1800000</param> -->
     </data_provider>
 
 
