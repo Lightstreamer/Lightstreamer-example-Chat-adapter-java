@@ -64,7 +64,7 @@ The `adapters.xml` file for the Basic Chat Demo, should look like:
 
         <!-- Optional, managed by the inherited LiteralBasedProvider.
              See LiteralBasedProvider javadoc. -->
-        <param name="item_family_1">chat_room</param>
+        <param name="item_family_1">chat_room.*</param>
         <param name="modes_for_item_family_1">DISTINCT</param>
 
     </metadata_provider>
