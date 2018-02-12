@@ -1,12 +1,12 @@
-# Lightstreamer - Basic Chat Demo - Java Adapter 
+# Lightstreamer - Basic Chat Demo - Java Adapter
 <!-- START DESCRIPTION lightstreamer-example-chat-adapter-java -->
 
 The *Lightstreamer Basic Chat Demo* is a very simple chat application based on [Lightstreamer](http://www.lightstreamer.com) for its real-time communication needs.
 
 This project shows the Data Adapter and Metadata Adapters for the *Basic Chat Demo* and how they can be plugged into Lightstreamer Server.
- 
+
 As an example of a client using this adapter, you may refer to the [Basic Chat Demo - HTML Client](https://github.com/Lightstreamer/Lightstreamer-example-chat-client-javascript) and view the corresponding [Live Demo](http://demos.lightstreamer.com/ChatDemo/).
- 
+
 ## Details
 
 This project includes the implementation of the [SmartDataProvider](http://www.lightstreamer.com/docs/adapter_java_inprocess_api/com/lightstreamer/interfaces/data/SmartDataProvider.html) interface and the [MetadataProviderAdapter](http://www.lightstreamer.com/docs/adapter_java_inprocess_api/com/lightstreamer/interfaces/metadata/MetadataProviderAdapter.html) interface for the *Lightstreamer Basic Chat Demos*.
@@ -24,7 +24,7 @@ The Metadata Adapter inherits from the reusable [LiteralBasedProvider](https://g
 
 ### The Adapter Set Configuration
 
-This Adapter Set is configured and will be referenced by the clients as `CHAT`. 
+This Adapter Set is configured and will be referenced by the clients as `CHAT`.
 
 The `adapters.xml` file for the Basic Chat Demo, should look like:
 ```xml
@@ -84,7 +84,7 @@ The `adapters.xml` file for the Basic Chat Demo, should look like:
              Configuration flag for periodic flush of the snapshot.
              Default: false. -->
         <param name="flush_snapshot">true</param>
-      		
+
         <!-- Optional for ChatDataAdapter.
              Configuration interval in millis for snapshot flush.
              Default: 30 minutes. -->
@@ -95,7 +95,7 @@ The `adapters.xml` file for the Basic Chat Demo, should look like:
 </adapters_conf>
 ```
 
-<i>NOTE: not all configuration options of an Adapter Set are exposed by the file suggested above. 
+<i>NOTE: not all configuration options of an Adapter Set are exposed by the file suggested above.
 You can easily expand your configurations using the generic template, `DOCS-SDKs/sdk_adapter_java_inprocess/doc/adapter_conf_template/adapters.xml`, as a reference.</i><br>
 <br>
 Please refer [here](http://www.lightstreamer.com/docs/base/General%20Concepts.pdf) for more details about Lightstreamer Adapters.
@@ -122,7 +122,7 @@ To build your own version of `LS_chat_metadata_adapter.jar` and `LS_chat_data_ad
  > jar cvf LS_chat_metadata_adapter.jar -C tmp_classes/metadata .
 ```
 * Stop Lightstreamer Server; copy the just compiled LS_chat_metadata_adapter.jar in the adapters/Chat/lib folder of your Lightstreamer Server installation; restart Lightstreamer Server.
- 
+
 ## See Also
 
 ### Clients Using This Adapter

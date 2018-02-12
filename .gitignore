@@ -213,3 +213,13 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+
+# SVN
+.svn/
+
+# Project specific
+Deployment_LS
+build_resources
+compile_libs
+bin
+
