@@ -53,7 +53,7 @@ public class ChatMetadataAdapter extends LiteralBasedProvider {
     private Logger logger;
 
     /**
-     * Keeps the client context informations supplied by Lightstreamer on the
+     * Keeps the client context information supplied by Lightstreamer on the
      * new session notifications.
      * Session information is needed to uniquely identify each client.
      */
@@ -143,7 +143,7 @@ public class ChatMetadataAdapter extends LiteralBasedProvider {
         //the session must exist to be closed
         assert(sessions.containsKey(session));
 
-        //we have to remove session informations from the session HashMap
+        //we have to remove session information from the session HashMap
         //and from the pairs "Set"
 
         Map<String,String> sessionInfo = sessions.get(session);
