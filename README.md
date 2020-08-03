@@ -45,12 +45,6 @@ The `adapters.xml` file for the Basic Chat Demo, should look like:
 
         <adapter_class>chat_demo.adapters.ChatMetadataAdapter</adapter_class>
 
-        <!-- Optional for ChatMetadataAdapter.
-             Configuration file for the Adapter's own logging.
-             Logging is managed through log4j. -->
-        <param name="log_config">adapters_log_conf.xml</param>
-        <param name="log_config_refresh_seconds">10</param>
-
         <!-- Optional, managed by the inherited LiteralBasedProvider.
              See LiteralBasedProvider javadoc. -->
         <!--
@@ -75,12 +69,6 @@ The `adapters.xml` file for the Basic Chat Demo, should look like:
         <adapter_class>chat_demo.adapters.ChatDataAdapter</adapter_class>
 
         <!-- Optional for ChatDataAdapter.
-             Configuration file for the Adapter's own logging.
-             Leans on the Metadata Adapter for the configuration refresh.
-             Logging is managed through log4j. -->
-        <param name="log_config">adapters_log_conf.xml</param>
-
-        <!-- Optional for ChatDataAdapter.
              Configuration flag for periodic flush of the snapshot.
              Default: false. -->
         <param name="flush_snapshot">true</param>
@@ -100,6 +88,7 @@ You can easily expand your configurations using the generic template, `DOCS-SDKs
 <br>
 Please refer [here](https://lightstreamer.com/docs/ls-server/latest/General%20Concepts.pdf) for more details about Lightstreamer Adapters.
 
+
 ## Install
 If you want to install a version of this demo in your local Lightstreamer Server, follow these steps:
 * Download *Lightstreamer Server* (Lightstreamer Server comes with a free non-expiring demo license for 20 connected users) from [Lightstreamer Download page](http://www.lightstreamer.com/download.htm), and install it, as explained in the `GETTING_STARTED.TXT` file in the installation home directory.
@@ -108,21 +97,21 @@ If you want to install a version of this demo in your local Lightstreamer Server
 * Launch Lightstreamer Server.
 * Test the Adapter, launching one of the clients listed in [Clients Using This Adapter](https://github.com/Lightstreamer/Lightstreamer-example-Chat-adapter-java#clients-using-this-adapter).
 
-## Build
-To build your own version of `LS_chat_metadata_adapter.jar` and `LS_chat_data_adapter.jar`, instead of using the one provided in the `deploy.zip` file from the [Install](https://github.com/Lightstreamer/Lightstreamer-example-Chat-adapter-java#install) section above, follow these steps:
-* Clone this project.
-* Get the `ls-adapter-interface.jar` file from the [latest Lightstreamer distribution](http://www.lightstreamer.com/download), and copy it into the `lib` folder.
-* Get the `log4j-1.2.17.jar` file from [Apache log4j](https://logging.apache.org/log4j/1.2/) and copy it into the `lib` folder.
-* Create the jars `LS_chat_metadata_adapter.jar` and `LS_chat_data_adapter.jar` created for something like these commands:
-```sh
- > mkdir tmp_classes/adapter tmp_classes/metadata
- > javac -source 1.7 -target 1.7 -nowarn -g -classpath lib/log4j-1.2.17.jar;lib/ls-adapter-interface.jar -sourcepath src/src_chat -d tmp_classes/adapter src/src_chat/chat_demo/adapters/ChatDataAdapter.java
- > jar cvf LS_chat_data_adapter.jar -C tmp_classes/adapter .
- > javac -source 1.7 -target 1.7 -nowarn -g -classpath lib/log4j-1.2.17.jar;lib/ls-adapter-interface.jar;LS_chat_data_adapter.jar -sourcepath src/src_metadata -d tmp_classes/metadata src/src_metadata/chat_demo/adapters/ChatMetadataAdapter.java
- > jar cvf LS_chat_metadata_adapter.jar -C tmp_classes/metadata .
-```
-* Stop Lightstreamer Server; copy the just compiled LS_chat_metadata_adapter.jar in the adapters/Chat/lib folder of your Lightstreamer Server installation; restart Lightstreamer Server.
 
+## Build
+
+To build your own version of `example-Chat-adapter-java-0.0.1-SNAPSHOT.jar` instead of using the one provided in the `deploy.zip` file from the [Install](https://github.com/Lightstreamer/Lightstreamer-example-Chat-adapter-java#install) section above, you have two options:
+either use [Maven](https://maven.apache.org/) (or other build tools) to take care of dependencies and building (recommended) or gather the necessary jars yourself and build it manually.
+For the sake of simplicity only the Maven case is detailed here.
+
+### Maven
+
+You can easily build and run this application using Maven through the pom.xml file located in the root folder of this project. As an alternative, you can use an alternative build tool (e.g. Gradle, Ivy, etc.) by converting the provided pom.xml file.
+
+Assuming Maven is installed and available in your path you can build the demo by running
+```sh 
+ mvn install dependency:copy-dependencies 
+```
 ## See Also
 
 ### Clients Using This Adapter
@@ -142,5 +131,6 @@ To build your own version of `LS_chat_metadata_adapter.jar` and `LS_chat_data_ad
 
 ## Lightstreamer Compatibility Notes
 
-* Compatible with Lightstreamer SDK for Java In-Process Adapters since 6.0
+- Compatible with Lightstreamer SDK for Java In-Process Adapters since 7.3.
+- For a version of this example compatible with Lightstreamer SDK for Java In-Process Adapters version6.0, please refer to [this tag](https://github.com/Lightstreamer/Lightstreamer-example-Chat-adapter-java/releases/tag/pre_mvn).
 - For a version of this example compatible with Lightstreamer SDK for Java Adapters version 5.1, please refer to [this tag](https://github.com/Lightstreamer/Lightstreamer-example-Chat-adapter-java/releases/tag/for_Lightstreamer_5.1.2).
