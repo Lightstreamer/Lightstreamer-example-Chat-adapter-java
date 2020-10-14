@@ -223,3 +223,4 @@ build_resources
 compile_libs
 bin
 
+/target/
