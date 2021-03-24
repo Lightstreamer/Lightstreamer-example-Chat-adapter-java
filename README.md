@@ -36,7 +36,7 @@ The `adapters.xml` file for the Basic Chat Demo, should look like:
 
     <metadata_provider>
 
-        <adapter_class>chat_demo.adapters.ChatMetadataAdapter</adapter_class>
+        <adapter_class>com.lightstreamer.examples.chat_demo.adapters.ChatMetadataAdapter</adapter_class>
 
         <!-- Optional, managed by the inherited LiteralBasedProvider.
              See LiteralBasedProvider javadoc. -->
@@ -59,7 +59,7 @@ The `adapters.xml` file for the Basic Chat Demo, should look like:
 
     <data_provider name="CHAT_ROOM">
 
-        <adapter_class>chat_demo.adapters.ChatDataAdapter</adapter_class>
+        <adapter_class>com.lightstreamer.examples.chat_demo.adapters.ChatDataAdapter</adapter_class>
 
         <!-- Optional for ChatDataAdapter.
              Configuration flag for periodic flush of the snapshot.
