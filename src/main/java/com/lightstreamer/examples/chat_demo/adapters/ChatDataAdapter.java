@@ -14,7 +14,7 @@
   limitations under the License.
 */
 
-package chat_demo.adapters;
+package com.lightstreamer.examples.chat_demo.adapters;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
