@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.lightstreamer</groupId>
-  <artifactId>example-Chat-adapter-java</artifactId>
+  <artifactId>example-chat-adapter-java</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
@@ -43,6 +43,14 @@
     </plugins>
   </build>
   
+  <distributionManagement>
+   <repository>
+     <id>github</id>
+     <name>GitHub Lightstreamer Apache Maven Packages</name>
+     <url>https://maven.pkg.github.com/Lightstreamer/Lightstreamer-example-Chat-adapter-java</url>
+   </repository>
+   </distributionManagement>
+
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
