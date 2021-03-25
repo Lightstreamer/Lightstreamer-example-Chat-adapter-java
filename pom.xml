@@ -2,12 +2,12 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.lightstreamer</groupId>
-  <artifactId>example-chat-adapter-java</artifactId>
+  <groupId>com.lightstreamer.examples</groupId>
+  <artifactId>chat-adapter-java</artifactId>
   <version>1.0.0</version>
   <packaging>jar</packaging>
 
-  <name>example-chat-adapter-java</name>
+  <name>chat-adapter-java</name>
   <!-- <url>http://maven.apache.org</url> -->
 
   <properties>
