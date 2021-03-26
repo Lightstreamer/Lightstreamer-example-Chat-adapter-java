@@ -7,8 +7,8 @@
   <version>1.0.0</version>
   <packaging>jar</packaging>
 
-  <name>chat-adapter-java</name>
-  <!-- <url>http://maven.apache.org</url> -->
+  <name>Lightstreamer Chat Adapter Demo Java</name>
+  <url>https://github.com/Lightstreamer/Lightstreamer-example-Chat-adapter-java</url>
 
   <properties>
     <maven.compiler.target>1.8</maven.compiler.target>
@@ -35,8 +35,6 @@
             </goals>
           </execution>
         </executions>
-        <configuration>
-          <mainClass>com.lightstreamer.examples.chat_demo.adapters.ChatMetadataAdapter</mainClass>
         </configuration>
       </plugin>
     </plugins>
