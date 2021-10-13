@@ -7,7 +7,7 @@
   <version>1.0.0</version>
   <packaging>jar</packaging>
 
-  <name>Lightstreamer Chat Adapter Demo Java</name>
+  <name>Lightstreamer Chat Demo Java Adapter</name>
   <url>https://github.com/Lightstreamer/Lightstreamer-example-Chat-adapter-java</url>
 
   <properties>
@@ -35,11 +35,10 @@
             </goals>
           </execution>
         </executions>
-        </configuration>
       </plugin>
     </plugins>
   </build>
-  
+
   <distributionManagement>
     <repository>
       <id>github</id>
