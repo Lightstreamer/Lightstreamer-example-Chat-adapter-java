@@ -88,12 +88,12 @@ If you want to install a version of this demo in your local Lightstreamer Server
 * Download *Lightstreamer Server* (Lightstreamer Server comes with a free non-expiring demo license for 20 connected users) from [Lightstreamer Download page](http://www.lightstreamer.com/download.htm), and install it, as explained in the `GETTING_STARTED.TXT` file in the installation home directory.
 * Get the `deploy.zip` file of the [latest release](https://github.com/Lightstreamer/Lightstreamer-example-Chat-adapter-java/releases), unzip it, and copy the just unzipped `Chat` folder into the `adapters` folder of your Lightstreamer Server installation.
 * Launch Lightstreamer Server.
-* Test the Adapter, launching one of the clients listed in [Clients Using This Adapter](https://github.com/Lightstreamer/Lightstreamer-example-Chat-adapter-java#clients-using-this-adapter).
+* Test the Adapter, launching one of the clients listed in [Clients Using This Adapter](#clients-using-this-adapter).
 
 
 ## Build
 
-To build your own version of `chat-adapter-java-x.y.z.jar` instead of using the one provided in the `deploy.zip` file from the [Install](https://github.com/Lightstreamer/Lightstreamer-example-Chat-adapter-java#install) section above, you have two options:
+To build your own version of `chat-adapter-java-x.y.z.jar` instead of using the one provided in the `deploy.zip` file from the [Install](#install) section above, you have two options:
 either use [Maven](https://maven.apache.org/) (or other build tools) to take care of dependencies and building (recommended) or gather the necessary jars yourself and build it manually.
 For the sake of simplicity only the Maven case is detailed here.
 
