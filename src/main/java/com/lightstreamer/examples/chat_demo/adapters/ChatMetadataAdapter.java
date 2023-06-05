@@ -113,7 +113,7 @@ public class ChatMetadataAdapter extends LiteralBasedProvider {
         this.loadChatFeed();
         this.handleChatMessage(pieces,message,session);
 
-        return CompletableFuture.completedStage(null);
+        return CompletableFuture.completedFuture(null);
     }
 
     public void notifyNewSession(String user, String session, Map sessionInfo)
