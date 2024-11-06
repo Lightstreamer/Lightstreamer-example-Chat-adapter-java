@@ -14,7 +14,8 @@ This project includes the implementation of the [SmartDataProvider](https://ligh
 ### Data Adapter
 The `ChatDataAdapter.java` class contains the source code for the Chat Data Adapter. The Data Adapter accepts message submission for the unique chat room. The sender is identified by an IP address and a nickname.
 
-It's possible to flush chat history based on optional parameters provided in the `adapters.xml` file.
+It's possible to configure a custom initial chat history (i.e. snapshot) based on optional parameters provided in the `adapters.xml` file.
+It's also possible to flush chat history (and restore any configured custom initial history) based on optional parameters provided in the `adapters.xml` file.
 
 ### Metadata Adapter
 The `ChatMetadataAdapter.java` class contains the source code for a Metadata Adapter to be associated with the Chat Demo Data Adapter.
@@ -60,6 +61,13 @@ The `adapters.xml` file for the Basic Chat Demo, should look like:
     <data_provider name="CHAT_ROOM">
 
         <adapter_class>com.lightstreamer.examples.chat_demo.adapters.ChatDataAdapter</adapter_class>
+
+        <!-- Optional for ChatDataAdapter.
+             Configuration of a custom initial snapshot at subscription time.
+             Use progressive numbers after "custom_snapshot_", starting from 1.
+             Default: empty snapshot. -->
+        <param name="custom_snapshot_1">Hello</param>
+        <param name="custom_snapshot_2">How're you doing?</param>
 
         <!-- Optional for ChatDataAdapter.
              Configuration flag for periodic flush of the snapshot.

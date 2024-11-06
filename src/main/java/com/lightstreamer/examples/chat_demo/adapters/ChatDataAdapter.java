@@ -20,6 +20,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -75,6 +76,11 @@ public class ChatDataAdapter implements SmartDataProvider {
     private volatile Object subscribed;
     
     /**
+     * A configurable list of messages for a custom initial snapshot.
+     */
+    private final LinkedList<String> customSnapshot = new LinkedList<>();
+
+    /**
      * Boolean flag for periodic flush of snapshot (call clearSnaphot).
      */
     private boolean flushSnapshot;
@@ -115,6 +121,15 @@ public class ChatDataAdapter implements SmartDataProvider {
         // Read the Adapter Set name, which is supplied by the Server as a parameter
         String adapterSetId = (String) params.get("adapters_conf.id");
         
+        boolean stop = false;
+        for (int i = 1; ! stop; i++) {
+            if (params.containsKey("custom_snapshot_" + i)) {
+                String msg = (String) params.get("custom_snapshot_" + i);
+                this.customSnapshot.add(msg);
+            } else {
+                stop = true;
+            }
+        }
         
         if (params.containsKey("flush_snapshot")) {
             String tmp = (String) params.get("flush_snapshot");
@@ -153,6 +168,8 @@ public class ChatDataAdapter implements SmartDataProvider {
 
         subscribed = handle;
 
+        sendCustomSnapshot();
+
         if(this.flushSnapshot) {
         	// Start Thread for periodic flush of the snapshot.
             myTimer = new Timer(true);
@@ -161,6 +178,7 @@ public class ChatDataAdapter implements SmartDataProvider {
                @Override
                 public void run() {
                     clearHistory();
+                    sendCustomSnapshot();
                 }
             }, new Date(System.currentTimeMillis() + this.flushInterval), this.flushInterval);
         } 
@@ -253,6 +271,14 @@ public class ChatDataAdapter implements SmartDataProvider {
         return true;
     }
     
+    private void sendCustomSnapshot() {
+        int i = 1;
+        for (String snapshotMsg : customSnapshot) {
+            sendMessage("0.0.0.0", "user" + i, snapshotMsg);
+            i++;
+        }
+    }
+
     // used in case of flush_snapshot set to true.
     public void clearHistory() {
         final Object currSubscribed = subscribed;
