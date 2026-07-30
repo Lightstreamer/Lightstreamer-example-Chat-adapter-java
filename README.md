@@ -9,7 +9,7 @@ As an example of a client using this adapter, you may refer to the [Basic Chat D
 
 ## Details
 
-This project includes the implementation of the [SmartDataProvider](https://lightstreamer.com/api/ls-adapter-inprocess/latest/com/lightstreamer/interfaces/data/SmartDataProvider.html) interface and the [MetadataProviderAdapter](https://lightstreamer.com/api/ls-adapter-inprocess/latest/com/lightstreamer/interfaces/metadata/MetadataProviderAdapter.html) interface for the *Lightstreamer Basic Chat Demos*.
+This project includes the implementation of the [`DataAdapter`](https://lightstreamer.com/api/ls-adapter-inprocess/latest/com/lightstreamer/adapter/data/DataAdapter.html) interface and the [`MetadataAdapter`](https://lightstreamer.com/api/ls-adapter-inprocess/latest/com/lightstreamer/adapter/metadata/MetadataAdapter.html) interface for the *Lightstreamer Basic Chat Demos*.
 
 ### Data Adapter
 The `ChatDataAdapter.java` class contains the source code for the Chat Data Adapter. The Data Adapter accepts message submission for the unique chat room. The sender is identified by an IP address and a nickname.
@@ -20,7 +20,7 @@ It's also possible to flush chat history (and restore any configured custom init
 ### Metadata Adapter
 The `ChatMetadataAdapter.java` class contains the source code for a Metadata Adapter to be associated with the Chat Demo Data Adapter.
 
-The Metadata Adapter inherits from the reusable [LiteralBasedProvider](https://github.com/Lightstreamer/Lightstreamer-lib-adapter-java-inprocess#literalbasedprovider-metadata-adapter) and just adds a simple support for message submission. It should not be used as a reference for a real case of client-originated message handling, as no guaranteed delivery and no clustering support is shown.
+The Metadata Adapter implements `MetadataAdapter` directly with no authentication logic (any login is accepted) and adds a simple support for message submission. It should not be used as a reference for a real case of client-originated message handling, as no guaranteed delivery and no clustering support is shown.
 <!-- END DESCRIPTION lightstreamer-example-chat-adapter-java -->
 
 ### The Adapter Set Configuration
@@ -39,21 +39,8 @@ The `adapters.xml` file for the Basic Chat Demo, should look like:
 
         <adapter_class>com.lightstreamer.examples.chat_demo.adapters.ChatMetadataAdapter</adapter_class>
 
-        <!-- Optional, managed by the inherited LiteralBasedProvider.
-             See LiteralBasedProvider javadoc. -->
-        <!--
-        <param name="max_bandwidth">40</param>
-        <param name="max_frequency">3</param>
-        <param name="buffer_size">30</param>
-        <param name="prefilter_frequency">5</param>
-        <param name="allowed_users">user123,user456</param>
-        -->
-        <param name="distinct_snapshot_length">30</param>
-
-        <!-- Optional, managed by the inherited LiteralBasedProvider.
-             See LiteralBasedProvider javadoc. -->
-        <param name="item_family_1">chat_room.*</param>
-        <param name="modes_for_item_family_1">DISTINCT</param>
+        <!-- Ensure compatibility with old versions of the demo Clients. -->
+        <support_LiteralBased_subscriptions>Y</support_LiteralBased_subscriptions>
 
     </metadata_provider>
 
@@ -126,14 +113,15 @@ Assuming Maven is installed and available in your path you can build the demo by
 ### Related Projects
 
 * [Lightstreamer - Basic Chat Demo - Node.js Adapter](https://github.com/Lightstreamer/Lightstreamer-example-Chat-adapter-node)
-* [LiteralBasedProvider Metadata Adapter](https://github.com/Lightstreamer/Lightstreamer-lib-adapter-java-inprocess#literalbasedprovider-metadata-adapter)
+
 * [Lightstreamer - Basic Messenger Demo - Java Adapter](https://github.com/Lightstreamer/Lightstreamer-example-Messenger-adapter-java)
 * [Lightstreamer - Basic Messenger Demo - HTML Client](https://github.com/Lightstreamer/Lightstreamer-example-Messenger-client-javascript)
 
 
 ## Lightstreamer Compatibility Notes
 
-- Compatible with Lightstreamer SDK for Java In-Process Adapters since version 8.0.
+- Compatible with Lightstreamer SDK for Java In-Process Adapters since version 9.0.
+- For a version of this example compatible with Lightstreamer SDK for Java In-Process Adapters versions 8.x, please refer to [this tag](https://github.com/Lightstreamer/Lightstreamer-example-Chat-adapter-java/tree/XXXXXXXXXXXXXXXXXXXXX).
 - For a version of this example compatible with Lightstreamer SDK for Java In-Process Adapters versions 7.3 to 7.4, please refer to [this tag](https://github.com/Lightstreamer/Lightstreamer-example-Chat-adapter-java/tree/last_for_interface_7.4.x).
 - For a version of this example compatible with Lightstreamer SDK for Java In-Process Adapters version 6.0, please refer to [this tag](https://github.com/Lightstreamer/Lightstreamer-example-Chat-adapter-java/releases/tag/pre_mvn).
 - For a version of this example compatible with Lightstreamer SDK for Java Adapters version 5.1, please refer to [this tag](https://github.com/Lightstreamer/Lightstreamer-example-Chat-adapter-java/releases/tag/for_Lightstreamer_5.1.2).

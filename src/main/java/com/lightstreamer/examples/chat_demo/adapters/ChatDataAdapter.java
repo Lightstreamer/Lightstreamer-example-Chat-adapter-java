@@ -24,35 +24,25 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.lightstreamer.interfaces.data.DataProviderException;
-import com.lightstreamer.interfaces.data.FailureException;
-import com.lightstreamer.interfaces.data.ItemEventListener;
-import com.lightstreamer.interfaces.data.SmartDataProvider;
-import com.lightstreamer.interfaces.data.SubscriptionException;
+import com.lightstreamer.adapter.common.InitException;
+import com.lightstreamer.adapter.common.Mode;
+import com.lightstreamer.adapter.data.DataAdapter;
+import com.lightstreamer.adapter.data.ItemListener;
+import com.lightstreamer.adapter.data.ItemManager;
+import com.lightstreamer.adapter.data.SubscriptionException;
 
 
-public class ChatDataAdapter implements SmartDataProvider {
+public class ChatDataAdapter implements DataAdapter {
 
     private static final String ITEM_NAME = "chat_room";
-    
-    /**
-     * A static map, to be used by the Metadata Adapter to find the data
-     * adapter instance; this allows the Metadata Adapter to forward client
-     * messages to the adapter.
-     * The map allows multiple instances of this Data Adapter to be included
-     * in different Adapter Sets. Each instance is identified with the name
-     * of the related Adapter Set; defining multiple instances in the same
-     * Adapter Set is not allowed.
-     */
-    public static final ConcurrentHashMap<String, ChatDataAdapter> feedMap =
-        new ConcurrentHashMap<String, ChatDataAdapter>();
 
     /**
      * Private logger; a specific "LS_demos_Logger.Chat" category
@@ -61,19 +51,16 @@ public class ChatDataAdapter implements SmartDataProvider {
     private Logger logger;
 
     /**
-     * The listener of updates set by Lightstreamer Kernel.
+     * The currently active ItemManager for the chat room item.
+     * At most one ItemManager can be active at a time, since only
+     * one item ("chat_room") is supported.
      */
-    private ItemEventListener listener;
+    private volatile ChatItemManager currentItemManager;
 
     /**
      * Used to enqueue the calls to the listener.
      */
     private final ExecutorService executor;
-
-    /**
-     * An object representing the subscription.
-     */
-    private volatile Object subscribed;
     
     /**
      * A configurable list of messages for a custom initial snapshot.
@@ -109,7 +96,8 @@ public class ChatDataAdapter implements SmartDataProvider {
         executor = Executors.newSingleThreadExecutor();
     }
 
-    public void init(Map params, File configDir) throws DataProviderException {
+    @Override
+    public void init(Map<String, String> params, File configDir) throws InitException {
         
         // Logging configuration for the demo is carried out in the init
         // method of Metadata Adapter. In order to be sure that this method 
@@ -118,13 +106,10 @@ public class ChatDataAdapter implements SmartDataProvider {
         // <metadata_adapter_initialised_first>Y</metadata_adapter_initialised_first>
         logger = LogManager.getLogger("LS_demos_Logger.Chat");
 
-        // Read the Adapter Set name, which is supplied by the Server as a parameter
-        String adapterSetId = (String) params.get("adapters_conf.id");
-        
         boolean stop = false;
         for (int i = 1; ! stop; i++) {
             if (params.containsKey("custom_snapshot_" + i)) {
-                String msg = (String) params.get("custom_snapshot_" + i);
+                String msg = params.get("custom_snapshot_" + i);
                 this.customSnapshot.add(msg);
             } else {
                 stop = true;
@@ -132,83 +117,23 @@ public class ChatDataAdapter implements SmartDataProvider {
         }
         
         if (params.containsKey("flush_snapshot")) {
-            String tmp = (String) params.get("flush_snapshot");
-            this.flushSnapshot = new Boolean(tmp).booleanValue();
+            String tmp = params.get("flush_snapshot");
+            this.flushSnapshot = Boolean.parseBoolean(tmp);
         } else {
             this.flushSnapshot = false;
         }
         
         if (params.containsKey("flush_snapshot_interval")) {
-            String tmp = (String) params.get("flush_snapshot_interval");
-            this.flushInterval = new Integer(tmp).intValue();
+            String tmp = params.get("flush_snapshot_interval");
+            this.flushInterval = Integer.parseInt(tmp);
         } else {
             this.flushInterval = DEFAULT_FLUSH_INTERVAL;
         }
         
         this.messagesPresence = false;
 
-        // Put a reference to this instance on a static map
-        // to be read by the Metadata Adapter
-        feedMap.put(adapterSetId, this);
-
         // Adapter ready
         logger.info("ChatDataAdapter ready");
-
-    }
-
-    public void subscribe(String item, Object handle, boolean arg2)
-            throws SubscriptionException, FailureException {
-
-        if (!item.equals(ITEM_NAME)) {
-            // only one item for a unique chat room is managed
-            throw new SubscriptionException("No such item");
-        }
-        
-        assert(subscribed == null);
-
-        subscribed = handle;
-
-        sendCustomSnapshot();
-
-        if(this.flushSnapshot) {
-        	// Start Thread for periodic flush of the snapshot.
-            myTimer = new Timer(true);
-            
-            myTimer.scheduleAtFixedRate(new TimerTask() {
-               @Override
-                public void run() {
-                    clearHistory();
-                    sendCustomSnapshot();
-                }
-            }, new Date(System.currentTimeMillis() + this.flushInterval), this.flushInterval);
-        } 
-    }
-
-
-    public void unsubscribe(String arg0) throws SubscriptionException,
-        FailureException {
-
-        assert(subscribed != null);
-
-        subscribed = null;
-        
-        if (myTimer != null) {
-            myTimer.cancel();
-            myTimer.purge();
-            myTimer = null;
-        }
-    }
-
-    public boolean isSnapshotAvailable(String arg0)
-            throws SubscriptionException {
-        //This adapter does not handle the snapshot.
-        //If there is someone subscribed the snapshot is kept by the server
-        return false;
-    }
-
-
-    public void setListener(ItemEventListener listener) {
-        this.listener = listener;
 
     }
 
@@ -218,10 +143,11 @@ public class ChatDataAdapter implements SmartDataProvider {
      * The sender is identified by an IP address and a nickname.
      */
     public boolean sendMessage(String IP, String nick, String message) {
-        final Object currSubscribed = subscribed;
-        if (currSubscribed == null) {
+        final ChatItemManager mgr = currentItemManager;
+        if (mgr == null) {
             return false;
         }
+        final ItemListener currListener = mgr.listener;
 
         //NB no anti-flood control
 
@@ -261,7 +187,7 @@ public class ChatDataAdapter implements SmartDataProvider {
                 // call the update on the listener;
                 // in case the listener has just been detached,
                 // the listener should detect the case
-                listener.smartUpdate(currSubscribed, update, false);
+                currListener.update(update);
             }
         };
 
@@ -270,21 +196,14 @@ public class ChatDataAdapter implements SmartDataProvider {
 
         return true;
     }
-    
-    private void sendCustomSnapshot() {
-        int i = 1;
-        for (String snapshotMsg : customSnapshot) {
-            sendMessage("0.0.0.0", "user" + i, snapshotMsg);
-            i++;
-        }
-    }
 
     // used in case of flush_snapshot set to true.
     public void clearHistory() {
-        final Object currSubscribed = subscribed;
-        if (currSubscribed == null || this.messagesPresence == false) {
+        final ChatItemManager mgr = currentItemManager;
+        if (mgr == null || this.messagesPresence == false) {
             return;
         }
+        final ItemListener currListener = mgr.listener;
         //If we have a listener create a new Runnable to be used as a task to pass the
         //event to the listener
         Runnable updateTask = new Runnable() {
@@ -292,7 +211,7 @@ public class ChatDataAdapter implements SmartDataProvider {
                 // call the update on the listener;
                 // in case the listener has just been detached,
                 // the listener should detect the case
-                listener.smartClearSnapshot(currSubscribed);
+                currListener.clearSnapshot();
             }
         };
 
@@ -301,10 +220,98 @@ public class ChatDataAdapter implements SmartDataProvider {
         this.messagesPresence = false;
     }
 
-    public void subscribe(String arg0, boolean arg1)
-        throws SubscriptionException, FailureException {
-    //NEVER CALLED
+    @Override
+    public CompletionStage<ItemManager> getItemManager(String itemName) throws SubscriptionException {
+        if (!itemName.equals(ITEM_NAME)) {
+        	// only one item for a unique chat room is managed
+            CompletableFuture<ItemManager> f = new CompletableFuture<>();
+            f.completeExceptionally(new SubscriptionException("No such item: " + itemName));
+            return f;
+        }
+        return CompletableFuture.completedFuture(new ChatItemManager());
+    }
 
+    /**
+     * ItemManager for the unique "chat_room" item.
+     * At most one instance can be active at a time.
+     */
+    private class ChatItemManager implements ItemManager {
+
+        private volatile ItemListener listener;
+
+        private void sendCustomSnapshot() {
+            int i = 1;
+            for (String snapshotMsg : customSnapshot) {
+                sendMessage("0.0.0.0", "user" + i, snapshotMsg);
+                i++;
+            }
+        }
+
+        @Override
+        public Mode getSupportedMode() {
+            return Mode.DISTINCT;
+        }
+
+        @Override
+        public Integer getDistinctSnapshotLength() {
+            return 30;
+        }
+
+        @Override
+        public CompletionStage<Void> subscribe(ItemListener itemListener) {
+            assert(currentItemManager == null);
+
+            this.listener = itemListener;
+            currentItemManager = this;
+
+            sendCustomSnapshot();
+
+            if(flushSnapshot) {
+                // Start Thread for periodic flush of the snapshot.
+                myTimer = new Timer(true);
+                
+                myTimer.scheduleAtFixedRate(new TimerTask() {
+                   @Override
+                    public void run() {
+                        clearHistory();
+                        sendCustomSnapshot();
+                    }
+                }, new Date(System.currentTimeMillis() + flushInterval), flushInterval);
+            }
+
+            return CompletableFuture.completedFuture(null);
+        }
+
+        @Override
+        public boolean isSnapshotAvailable() {
+            //This adapter does not handle the snapshot.
+            //If there is someone subscribed the snapshot is kept by the server
+            return false;
+        }
+
+        @Override
+        public CompletionStage<Void> unsubscribe() {
+            assert(currentItemManager != null);
+
+            currentItemManager = null;
+            this.listener = null;
+            
+            if (myTimer != null) {
+                myTimer.cancel();
+                myTimer.purge();
+                myTimer = null;
+            }
+
+            return CompletableFuture.completedFuture(null);
+        }
+    }
+
+    @Override
+    public void shutdown() {
+        executor.shutdown();
+        if (myTimer != null) {
+            myTimer.cancel();
+        }
     }
 
 }
